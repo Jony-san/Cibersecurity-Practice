@@ -27,15 +27,6 @@ app.use(express.json());
 app.use('/sql', SQL);
 app.use('/xss', XSS);
 
-//Probar la conexion a la base de datos
-(async () => {
-    try {
-        await conection.authenticate();
-        console.log('Conexion exitosa a la base de datos');
-    } catch (error) {
-        console.error('No se pudo conectar a la base de datos:', error);
-    }
-})();
 
 app.get('/', (req, res) => {
   res.send('app conectada exitosamente');
