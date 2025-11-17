@@ -1,14 +1,56 @@
-import jwt from 'jwt' // Asegúrate de tener el paquete jsonwebtoken instalado
+import jwt from 'jsonwebtoken' // Asegúrate de tener el paquete jsonwebtoken instalado
 
-export const createJWT = async (name, company, credential) =>{
+
+export const createJWT = async (name, company) =>{
+    //Crear objeto que contendra el jwt
     const payload = {
         name: name,
         company: company,
-        credential: credential
     };
-
-    const secretKey = 'your_secret_key'; // Cambia esto por una clave secreta segura
+    
+    //Definir secreto
+    const secretKey = 'example_key'; // Cambia esto por una clave secreta segura
+    //definir tiempo de expiracion
     const options = { expiresIn: '1h' }; // Opcional: tiempo de expiración
+    
+    //Crear y devolver JWT
+    return jwt.sign(payload, secretKey);
+}
 
-    return jwt.sign(payload, secretKey, options);
+export const AuthenticateJWT = async (token) =>{
+    try{
+        //Validar token
+        return jwt.verify(token, "example_key")
+    }catch(error){
+        throw new Error("Invalid Token");
+    }
+}
+
+export const Authenticate= async (req , res , next) =>{
+    try{
+        //Obtener token de autenticación
+        const token = req.headers.authorization;
+        if(!token){
+            res.json({
+                status: 400,
+                message: "Peticion invalida"
+            });
+        }
+        console.log("Token recibido:", token);
+        //Validar token
+        const validate = jwt.verify(token, "example_key")
+        if(!validate){
+            res.json({
+                status: 401,
+                messahe: "Token Invalido"
+            });
+        }
+        next();
+    }catch(error){
+        console.log(error);
+        res.json({
+            status: 500,
+            message: "Error en la autenticacion"
+        });
+    }
 }

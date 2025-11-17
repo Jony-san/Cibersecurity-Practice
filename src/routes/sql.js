@@ -2,12 +2,13 @@
 import express from 'express';
 //Importar conexion a la base de datos
 import conection from '../db/database.js';
+import { Authenticate } from '../utils/Authenticate.js';
 
 const router = express.Router();
 
 //ruta de ejemplo de una inyeccion sql
 //POST http://localhost:3003/sql/inyection
-router.post('/inyection', async (req, res) => {
+router.post('/inyection', /* Authenticate, */  async (req, res) => {
     try{
         console.log("iniciando ejemplo de inyeccion sql");
         const userdata = req.body;
@@ -29,7 +30,7 @@ router.post('/inyection', async (req, res) => {
 
 //ruta de ejemplo de una inyeccion sql
 //POST http://localhost:3003/sql/inyection
-router.post('/secure', async (req, res) => {
+router.post('/secure', /* Authenticate, */  async (req, res) => {
     try{
         console.log("iniciando ejemplo seguro de inyeccion sql");
         const userdata = req.body;
