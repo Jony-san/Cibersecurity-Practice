@@ -1,12 +1,10 @@
-import Sequelize from "sequelize";
+import mysql from "mysql2/promise";
 
-const conection = new Sequelize(
-    "test",// database
-    "jonyprueba",// username
-    "prueba",// password
-    {
+const conection = mysql.createPool({
         host: "localhost",
-        dialect: "mysql"
+        user: "jonyprueba",// database
+        password: "prueba",// username
+        database: "test",// password
     }
 );
 
