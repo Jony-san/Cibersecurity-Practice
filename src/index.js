@@ -7,6 +7,7 @@ import cors from 'cors';
 //Importar rutas
 import SQL from "./routes/sql.js";
 import XSS from "./routes/XSS.js";
+import { createJWT } from './utils/Authenticate.js';
 
 //Crear una app de express
 const app = express();
@@ -37,3 +38,9 @@ const PORT = process.env.PORT || 3003;
 app.listen(PORT, () => {
     console.log('Servidor escuchando en el puerto:', PORT);
 })
+
+/* 
+//Token de ejemplo: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSnVhbiBQZXJleiIsImNvbXBhbnkiOiJFbXByZXNhIFhZWiIsImlhdCI6MTc2MzQxNTc4NX0.AXM2c8U-TCTn-Tk0d5u_GB-_8NMJYMqumuXT0atF1g4
+const token =  await createJWT("Juan Perez", "Empresa XYZ");
+console.log("Token generado:", token);
+*/
