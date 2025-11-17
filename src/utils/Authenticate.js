@@ -31,8 +31,7 @@ export const Authenticate= async (req , res , next) =>{
         //Obtener token de autenticación
         const token = req.headers.authorization;
         if(!token){
-            res.json({
-                status: 400,
+            res.status(400).json({
                 message: "Peticion invalida"
             });
         }
@@ -40,16 +39,14 @@ export const Authenticate= async (req , res , next) =>{
         //Validar token
         const validate = jwt.verify(token, "example_key")
         if(!validate){
-            res.json({
-                status: 401,
-                messahe: "Token Invalido"
+            res.status(401).json({
+                message: "Token Invalido"
             });
         }
         next();
     }catch(error){
         console.log(error);
-        res.json({
-            status: 500,
+        res.status(500).json({
             message: "Error en la autenticacion"
         });
     }

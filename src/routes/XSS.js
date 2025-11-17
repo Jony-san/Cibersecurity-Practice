@@ -9,23 +9,27 @@ const router = express.Router();
 
 //ruta de ejemplo de un ataque XSS
 //POST http://localhost:3003/xss/ejemplo
-router.post('/ejemplo', (req, res) => {
+router.post('/example', (req, res) => {
+    //Extraer informacion
     const userdata = req.body;
     // Simulando una vulnerabilidad XSS al reflejar la entrada del usuario sin sanitizar
     const query = `<h1>Hello, ${userdata.comment}</h1>`;
-    res.send(query);
+    res.status(201).json({
+        consult: query
+    });
 });
 
 //ruta de ejemplo de un ataque XSS
 //POST http://localhost:3003/xss/ejemplo
 router.post('/secure', async (req, res) => {
+    //Extraer informacion
     let userdata = req.body;
     //sanitizar datos
-    console.log("Comentario antes de comentar",userdata);
     userdata.comment =  await sanitize(userdata.comment);
-    console.log("Comentario antes de comentar",userdata.comment);
     const query = `<h1>Hello, ${userdata.comment}</h1>`;
-    res.send(query);
+    res.status(201).json({
+        consult: query
+    });
 });
 
 export default router;

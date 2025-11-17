@@ -10,17 +10,19 @@ const router = express.Router();
 //POST http://localhost:3003/sql/inyection
 router.post('/inyection', /* Authenticate, */  async (req, res) => {
     try{
-        console.log("iniciando ejemplo de inyeccion sql");
+        //Extraer informacion
         const userdata = req.body;
         console.log("data recibida", req.body);
     
-        console.log("realizando consulta del usuario");
-        const [usuario] = await conection.execute(`select * from usuario where nombre = '${userdata.username}'`);
-        console.log("data encontrada", usuario);
+        //Consultar datos concatenando (vulnerable a inyeccion sql)
+        const [usuario] = await conection.execute(
+            `select * from usuario where nombre = '${userdata.username}'`
+            );
 
-    //if(usuario)
-
-    res.json({ usuario });
+        //Devolver informacion encontrada
+        res.status(201).json({ 
+            usuario
+    });
     }catch(error){
         console.error('Error en la consulta:', error);
         res.status(500).json({ error: 'Error en la consulta' });
@@ -32,19 +34,20 @@ router.post('/inyection', /* Authenticate, */  async (req, res) => {
 //POST http://localhost:3003/sql/inyection
 router.post('/secure', /* Authenticate, */  async (req, res) => {
     try{
-        console.log("iniciando ejemplo seguro de inyeccion sql");
+        //Extraer informacion
         const userdata = req.body;
         console.log("data recibida", req.body);
     
+        //Consultar datos usando indicadores de posicion (placeholders)
         const [usuario] = await conection.execute(
             'SELECT * FROM usuario WHERE nombre = ?',
             [userdata.username]
           );
-          console.log("data encontrada", usuario);
 
-    //if(usuario)
-
-    res.json({ usuario });
+        //Devolver informacion encontrada
+        res.status(201).json({ 
+            usuario
+        });
     }catch(error){
         console.error('Error en la consulta:', error);
         res.status(500).json({ error: 'Error en la consulta' });
