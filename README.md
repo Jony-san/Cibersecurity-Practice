@@ -29,3 +29,22 @@ cd Cibersecurity-Practice
 npm i
 # Correr proyecto
 npm run dev
+
+# Puede crear las tablas de usuario y empresa de ejemplo de la siguiente manera
+CREATE TABLE usuario (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    contraseña VARCHAR(255) NOT NULL,
+    empresa_id INT,
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (empresa_id) REFERENCES empresa(id)
+);
+
+CREATE TABLE empresa (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    direccion VARCHAR(255),
+    telefono VARCHAR(50),
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
