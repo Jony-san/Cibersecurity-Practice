@@ -11,10 +11,11 @@ router.post('/create', async (req, res) => {
         // Llamar al controlador para crear el usuario
         const user = await createUser(name, email, password, companyId);
         res.status(201).json({
-            message: "Usuario creado exitosamente",
+            message: user.message,
             user
         });
     } catch (error) {
+        console.log(error);
         // Manejo de errores
         res.status(500).json({ error: 'Error al crear el usuario' });
     }

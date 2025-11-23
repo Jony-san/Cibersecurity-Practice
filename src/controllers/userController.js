@@ -6,29 +6,41 @@ export const createUser = async (name, email, password, companyId) => {
     // Verificar si la empresa existe
     const company = await companies.findByPk(companyId);
     if (!company) {
-      return res.status(404).json({ error: "No se encontro la empresa deseada" });
+      return { message: "No se encontro la empresa deseada" };
     }
     // Verificar si el correo electrónico ya está registrado
     const existingUser = await User.findOne({ where: { email } });
     if (existingUser) {
-      return res.status(400).json({ error: "Se encontro un registro previo del correo electronico especificado" });
+      return { message: "Se encontro un registro previo del correo electronico especificado" };
     }
     // Crear un nuevo usuario en la base de datos
     const userdata = {
         name,
         email,
         password,
-        company
+        companyId
     }
     const user = await User.create(userdata);
-    return res.json(user);
+    return {
+      message: "Usuario creado exitosamente",
+      user
+    };
   } catch (err) {
-    return res.status(400).json({ error: err.message });
+    console.log(err);
+    return { message: err.message };
   }
 };
 
 export const getUser = async (userId) => {
-    // Buscar un usuario por su ID
-  const users = await User.findOne( { where: { id: userId } });
-  res.json(users);
+    try {
+      // Buscar un usuario por su ID
+      const users = await User.findOne( { where: { id: userId } });
+      return {
+        message: "Usuario encontrado exitosamente",
+        users
+      };
+    } catch (error) {
+      // Manejo de errores
+      return { message: error.message };
+    }
 };
