@@ -11,10 +11,11 @@ router.post('/create', async (req, res) => {
         // Llamar al controlador para crear la empresa
         const company = await createCompany(name);
         res.status(201).json({
-            message: "Usuario creado exitosamente",
+            message: company.message,
             company
         });
     } catch (error) {
+        console.log(error);
         // Manejo de errores
         res.status(500).json({ error: 'Error al crear la empresa' });
     }
@@ -34,6 +35,7 @@ router.get('/:id', async (req, res) => {
             res.status(404).json({ error: 'Empresa no encontrado' });
         }
     } catch (error) {
+        console.log(error);
         // Manejo de errores
         res.status(500).json({ error: 'Error al obtener la empresa' });
     }
