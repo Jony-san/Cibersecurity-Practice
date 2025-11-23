@@ -1,11 +1,16 @@
-import mysql from "mysql2/promise";
+import { Sequelize } from "sequelize";
+import dotenv from "dotenv";
 
-const conection = mysql.createPool({
-        host: "localhost",
-        user: "jonyprueba",// database
-        password: "prueba",// username
-        database: "test",// password
-    }
+//iniciar variables de entorno
+dotenv.config();
+
+export const sequelize = new Sequelize(
+  process.env.database,// database
+  process.env.username,// username
+  process.env.password,// password
+  {
+    host: "localhost",
+    dialect: "mysql",
+    logging: false, // quita logs feos
+  }
 );
-
-export default conection;
