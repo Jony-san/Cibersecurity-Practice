@@ -3,7 +3,7 @@ import companies from "../models/Company.js";
 
 export const createUser = async (name, email, password, companyId) => {
   try {
-    // Verificar si la empesa existe
+    // Verificar si la empresa existe
     const company = await companies.findByPk(companyId);
     if (!company) {
       return res.status(404).json({ error: "No se encontro la empresa deseada" });
