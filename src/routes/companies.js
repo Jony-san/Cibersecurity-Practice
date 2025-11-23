@@ -1,5 +1,5 @@
 import express from 'express';
-import { getCompany, createCompany } from '../controllers/userController.js';
+import { getCompany, createCompany } from '../controllers/companyController.js';
 const router = express.Router();
 
 // Ruta para crear una empresa
