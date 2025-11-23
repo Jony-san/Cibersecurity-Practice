@@ -45,7 +45,7 @@ app.use(express.json());
 app.use('/sql', SQL);
 app.use('/xss', XSS);
 app.use('/user', UserRoutes);
-app.use('/compnay', CompanyRoutes);
+app.use('/company', CompanyRoutes);
 
 
 app.get('/', (req, res) => {
