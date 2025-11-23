@@ -6,6 +6,8 @@ import cors from 'cors';
 //Importar rutas
 import SQL from "./routes/sql.js";
 import XSS from "./routes/XSS.js";
+import UserRoutes from "./routes/users.js";
+import CompanyRoutes from "./routes/companies.js";
 
 import { sequelize } from "./db/database.js";
 /* 
@@ -42,6 +44,8 @@ app.use(express.json());
 //Usar rutas
 app.use('/sql', SQL);
 app.use('/xss', XSS);
+app.use('/user', UserRoutes);
+app.use('/compnay', CompanyRoutes);
 
 
 app.get('/', (req, res) => {
