@@ -1,6 +1,10 @@
+//Importar modelos de usuario
 import User from "../models/User.js";
 import companies from "../models/Company.js";
+//Importar libreria de encriptacion
+import bcrypt from 'bcrypt';
 
+//Funcion para crear un usuario
 export const createUser = async (name, email, password, companyId) => {
   try {
     // Verificar si la empresa existe
@@ -13,6 +17,10 @@ export const createUser = async (name, email, password, companyId) => {
     if (existingUser) {
       return { message: "Se encontro un registro previo del correo electronico especificado" };
     }
+    //encryptar contraseña
+     /* password = await bcrypt.hash(password, 10);
+    console.log(password);  */
+
     // Crear un nuevo usuario en la base de datos
     const userdata = {
         name,
@@ -31,6 +39,7 @@ export const createUser = async (name, email, password, companyId) => {
   }
 };
 
+//Funcion para obtener un usuario por su ID
 export const getUser = async (userId) => {
     try {
       // Buscar un usuario por su ID
