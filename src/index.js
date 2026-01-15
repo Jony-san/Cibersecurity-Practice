@@ -14,7 +14,7 @@ import { sequelize } from "./db/database.js";
 //Probar conexion a la base de datos
 sequelize.authenticate()
   .then(() => console.log("🔌 Conexión MySQL OK"))
-  .catch(err => console.error("❌ Error MySQL:", err));
+  .catch(err => console.error("❌ Error MySQL:", err)); 
  */
 
 import User from "./models/User.js";
