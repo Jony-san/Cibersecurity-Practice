@@ -1,13 +1,30 @@
 //Importar framework
 import express from 'express';
 //Importar conexion a la base de datos
-import conection from './db/database.js';
 //Importar CORS
 import cors from 'cors';
 //Importar rutas
 import SQL from "./routes/sql.js";
 import XSS from "./routes/XSS.js";
-import { createJWT } from './utils/Authenticate.js';
+import UserRoutes from "./routes/users.js";
+import CompanyRoutes from "./routes/companies.js";
+
+import { sequelize } from "./db/database.js";
+/* 
+//Probar conexion a la base de datos
+sequelize.authenticate()
+  .then(() => console.log("🔌 Conexión MySQL OK"))
+  .catch(err => console.error("❌ Error MySQL:", err)); 
+ */
+
+import User from "./models/User.js";
+import Company from "./models/Company.js";
+//Importar relaciones
+import "./models/relations.js";
+
+sequelize.sync({ alter: true })  // crea/actualiza tablas
+  .then(() => console.log("📦 Tablas listas"))
+  .catch(console.error);
 
 //Crear una app de express
 const app = express();
@@ -27,6 +44,8 @@ app.use(express.json());
 //Usar rutas
 app.use('/sql', SQL);
 app.use('/xss', XSS);
+app.use('/user', UserRoutes);
+app.use('/company', CompanyRoutes);
 
 
 app.get('/', (req, res) => {

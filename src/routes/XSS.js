@@ -1,7 +1,5 @@
 //Importar framework
 import express from 'express';
-//Importar conexion a la base de datos
-import conection from '../db/database.js';
 //Importar funcion para sanitizar datos
 import { sanitize } from '../utils/data.js';
 

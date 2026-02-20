@@ -1,7 +1,7 @@
 //Importar framework
 import express from 'express';
-//Importar conexion a la base de datos
-import conection from '../db/database.js';
+//Importar modelo usuarios
+import User from '../models/User.js';
 import { Authenticate } from '../utils/Authenticate.js';
 
 const router = express.Router();
@@ -13,12 +13,18 @@ router.post('/inyection', /* Authenticate, */  async (req, res) => {
         //Extraer informacion
         const userdata = req.body;
         console.log("data recibida", req.body);
-    
+        /* 
         //Consultar datos concatenando (vulnerable a inyeccion sql)
         const [usuario] = await conection.execute(
             `select * from usuario where nombre = '${userdata.username}'`
             );
-
+        */
+        //Consultar datos con ORM
+        const usuario = await User.findAll({
+            where: {
+                name: userdata.username
+            }
+        });
         //Devolver informacion encontrada
         res.status(201).json({ 
             usuario
@@ -37,13 +43,18 @@ router.post('/secure', /* Authenticate, */  async (req, res) => {
         //Extraer informacion
         const userdata = req.body;
         console.log("data recibida", req.body);
-    
+        /* 
         //Consultar datos usando indicadores de posicion (placeholders)
         const [usuario] = await conection.execute(
             'SELECT * FROM usuario WHERE nombre = ?',
             [userdata.username]
-          );
-
+          ); */
+          //Consultar datos con ORM
+        const usuario = await User.findAll({
+            where: {
+                name: userdata.username
+            }
+        });
         //Devolver informacion encontrada
         res.status(201).json({ 
             usuario
