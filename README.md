@@ -52,3 +52,6 @@ CREATE TABLE empresa (
 # Puede insertar datos de la siguiente forma
 insert into usuario(nombre, email, contraseña, empresa_id) values("user3", "email3@ejemplo.com", "contra_segura_uwu", 1);
 insert into empresa(nombre, direccion, telefono) values("empresa1", "direccion_epic", "5512345678");
+
+## License
+This project is licensed under the MIT License.
